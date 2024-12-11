@@ -32,3 +32,32 @@ Unity component designed to automatically destroy the GameObject it is attached 
 1. Attach the `ParticleDestroyer` script to a GameObject.
 2. Set the `lifetime` value in the Inspector (e.g., 3.0 seconds).
 3. The GameObject will automatically be destroyed after the specified time.
+
+#### `ParticleController.cs`
+Unity Component designed to simulate particle motion with collision detection and resolution in a 3D bounded environment. It accounts for gravity, drag, restitution, and the particle's interactions with the walls of a cube.
+
+This script demonstrates foundational principles in physics-based animation, including the detection of collisions with planes, velocity corrections, and position adjustments.
+
+##### Key Variables
+
+- **`velocity`**: The current velocity of the particle.
+- **`mass`**: The mass of the particle, influencing gravitational and drag forces.
+- **`dragCoeff`**: The drag coefficient, which affects resistance to motion.
+- **`restitutionCoeff`**: The coefficient of restitution, defining elasticity in collisions.
+- **`cubeMinPosition` / `cubeMaxPosition`**: Boundaries of the cube within which the particle is constrained.
+
+##### Core Methods
+
+1. **`CalcNewState()`**:
+   - Calculates the new position and velocity of the particle based on external forces.
+
+2. **Collision Handling**:
+   - **`CheckForCollisionWithPlane()`**: Detects and calculates collisions with the cube's planes.
+   - **`DetectAndResolveCollision()`**: Iteratively resolves collisions to correct the particle's state.
+   - **`ResolveCollisions()`**: Finalizes the particle's position and velocity post-collision.
+
+3. **Utility Methods**:
+   - **`GetFacetNormal()`**: Returns the normal vector of a cube's face based on its index.
+   - **`GetFacetPoint()`**: Provides a reference point on a cube's face.
+   - **`FindCollisionPosition()`**: Computes the intersection point of the particle's trajectory with a plane.
+
