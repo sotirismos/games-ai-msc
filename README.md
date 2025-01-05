@@ -1,4 +1,5 @@
 ### **Particle Movement**
+
 #### `ParticleGenerator.cs`
 Unity component designed to generate particles dynamically during gameplay. It assigns random velocities to the generated particles.
 
@@ -158,3 +159,54 @@ Unity component designed to enable a GameObject to pursue a moving target by pre
    - Set the `speed` parameter to control the pursuer's movement speed.
    - Specify the `duration` to define how long the pursuer should move towards the target.
 
+### **2D Arrive steering behavior**
+#### ArriveBehavior.cs
+Unity component designed to move a GameObject smoothly towards a target by gradually adjusting its speed within a specified radius. This script ensures the pursuer decelerates as it gets closer to the target, providing a natural arrival behavior.
+
+##### Features
+1. **Smooth Arrival**
+   - Incorporates two radii (`targetRadius`, `slowRadius`) to determine how quickly the character slows down when approaching the target.
+
+2. **Controlled Speed and Acceleration**
+   - `maxSpeed` dictates the highest speed the character can achieve.
+   - `maxAcceleration` controls the maximum rate at which velocity can change.
+
+3. **Fixed Y-Position**
+   - Maintains a constant height (`fixedY`) so movement only occurs in the X-Z plane.
+
+4. **Timing Constraint**
+   - The `duration` parameter specifies how long the arrival behavior remains active before stopping.
+
+##### How It Works
+1. **Initialization**
+   - The `Start` method stores the initial Y position (`fixedY`) of the GameObject to keep it fixed over time.
+
+2. **Arrival Calculation**
+   - The `Update` method performs the following steps while `elapsedTime < duration`:
+     1. Calculates the acceleration needed to arrive at the target (via the `Arrive` method).
+     2. Updates the current velocity (`velocity`) using the calculated acceleration.
+     3. Moves the GameObject by adding the velocity (multiplied by `Time.deltaTime`) to its current position.
+     4. Keeps the Y-axis position constant by reassigning the stored `fixedY`.
+     5. Increments `elapsedTime` to track the movement duration.
+
+3. **Automatic Stop**
+   - Once `elapsedTime` exceeds `duration`, the GameObject stops updating its position, effectively ceasing the arrival behavior.
+
+4. **Arrive Method**
+   - **Input**: The target’s position (`targetPosition`), the current character velocity (`characterVelocity`), and various parameters (`slowRadius`, `targetRadius`, `maxAcceleration`).
+   - **Process**:
+     - Determines the distance to the target and calculates the desired speed based on whether the distance is within the `slowRadius`.
+     - Computes the desired velocity and derives the required acceleration.
+     - Caps the acceleration if it exceeds `maxAcceleration`.
+   - **Output**: Returns the appropriate acceleration vector to achieve a smooth arrival.
+
+##### Usage Notes
+- **Target Setup**: Assign a `Transform` to `target` for the GameObject you want to arrive at.
+- **Radii Tuning**: 
+  - Use `targetRadius` to define the distance at which the GameObject considers itself at the target.
+  - Use `slowRadius` to set the distance within which it begins to slow down.
+- **Speed & Acceleration**:
+  - Adjust `maxSpeed` for overall travel speed.
+  - Adjust `maxAcceleration` for how quickly the GameObject speeds up or slows down.
+- **Duration**:
+  - Set `duration` (in seconds) to limit how long the arrival behavior remains active.
