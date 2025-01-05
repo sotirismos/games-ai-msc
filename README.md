@@ -160,7 +160,7 @@ Unity component designed to enable a GameObject to pursue a moving target by pre
    - Specify the `duration` to define how long the pursuer should move towards the target.
 
 ### **2D Arrive steering behavior**
-#### ArriveBehavior.cs
+#### `ArriveBehavior.cs`
 Unity component designed to move a GameObject smoothly towards a target by gradually adjusting its speed within a specified radius. This script ensures the pursuer decelerates as it gets closer to the target, providing a natural arrival behavior.
 
 ##### Features
